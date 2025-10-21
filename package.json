@@ -1,0 +1,32 @@
+{
+  "name": "persona-builder",
+  "version": "1.0.0",
+  "description": "A beautiful web app for UX designers to create and visualize user personas",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve",
+    "dev": "npx serve",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "persona",
+    "ux",
+    "design",
+    "user-experience",
+    "designer-tools",
+    "supabase"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/persona-builder.git"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  }
+}
