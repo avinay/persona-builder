@@ -1,10 +1,9 @@
-// Import Supabase
-import { createClient } from 'https://unpkg.com/@supabase/supabase-js@2'
-
 // Initialize Supabase client
-const supabaseUrl = 'https://uuojoxkazsoyolgqbtmx.supabase.co' // Replace with your Supabase URL
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1b2pveGthenNveW9sZ3FidG14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MjAxOTYsImV4cCI6MjA3NTk5NjE5Nn0.CnzN61XmP4mdlW8OaEo9IiiuEgY8bQXExvAE6i5bGaU' // Replace with your Supabase anon key
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabaseUrl = 'https://uuojoxkazsoyolgqbtmx.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV1b2pveGthenNveW9sZ3FidG14Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0MjAxOTYsImV4cCI6MjA3NTk5NjE5Nn0.CnzN61XmP4mdlW8OaEo9IiiuEgY8bQXExvAE6i5bGaU'
+
+// Create Supabase client using the global Supabase object
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
 
 // Global variables
 let currentPersonaId = null

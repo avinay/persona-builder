@@ -93,7 +93,7 @@ header h1 {
 }
 
 .tab-content.active {
-    display: block;
+    display: flex;
 }
 
 /* Main Content Layout */
@@ -135,6 +135,8 @@ header h1 {
     top: 2rem;
     max-height: calc(100vh - 4rem);
     overflow-y: auto;
+    margin-right: 2rem;
+    min-width: 40rem;
 }
 
 .form-section h2 {
