@@ -98,14 +98,29 @@ header h1 {
 
 /* Main Content Layout */
 .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: stretch;
+}
+
+/* Create Tab Layout */
+#create-tab .main-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     align-items: start;
 }
 
+/* Manage Tab Layout */
+#manage-tab .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 @media (max-width: 1024px) {
-    .main-content {
+    #create-tab .main-content {
         grid-template-columns: 1fr;
     }
 }
@@ -118,12 +133,15 @@ header h1 {
     box-shadow: var(--shadow-md);
     position: sticky;
     top: 2rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
 }
 
 .form-section h2 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     color: var(--text-primary);
+    font-weight: 700;
 }
 
 .form-group {
@@ -139,22 +157,25 @@ header h1 {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem;
     border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
     font-family: inherit;
     background: white;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px rgba(106, 36, 255, 0.1);
 }
 
 .form-group textarea {
@@ -466,9 +487,64 @@ footer a:hover {
         padding: 24px;
         gap: 24px;
     }
+
+    /* Mobile Grid Adjustments */
+    .personas-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .personas-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .persona-card-details {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .persona-card-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .btn-edit, .btn-delete {
+        width: 100%;
+    }
 }
 
-/* Manage Section Styles */
+@media (max-width: 480px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .form-section {
+        padding: 1.5rem;
+    }
+
+    .manage-section {
+        padding: 1.5rem;
+    }
+
+    .persona-card-header {
+        padding: 1rem;
+    }
+
+    .persona-card-body {
+        padding: 1rem;
+    }
+
+    .persona-card-name {
+        font-size: 1.25rem;
+    }
+
+    .persona-card-role {
+        font-size: 0.9rem;
+    }
+}
+
+/* Manage Section Styles - Dribbble Style */
 .manage-section {
     background: var(--card-bg);
     padding: 2rem;
@@ -479,132 +555,236 @@ footer a:hover {
 
 .search-bar {
     margin-bottom: 2rem;
+    position: relative;
 }
 
 .search-bar input {
     width: 100%;
-    padding: 0.75rem;
+    padding: 1rem 1rem 1rem 3rem;
     border: 2px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    background: #f8fafc;
 }
 
 .search-bar input:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(106, 36, 255, 0.1);
-}
-
-.personas-list {
-    display: grid;
-    gap: 1.5rem;
-}
-
-.persona-item {
     background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+}
+
+.search-bar::before {
+    content: "🔍";
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    z-index: 1;
+}
+
+/* Dribbble-style Grid Layout */
+.personas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.persona-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
     transition: all 0.3s ease;
+    border: 1px solid #f1f5f9;
 }
 
-.persona-item:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+.persona-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-.persona-avatar {
-    width: 60px;
-    height: 60px;
+.persona-card-header {
+    padding: 1.5rem;
+    text-align: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.persona-card-avatar {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    flex-shrink: 0;
+    margin: 0 auto 1rem;
+    border: 4px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.persona-info {
-    flex: 1;
-}
-
-.persona-info h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
+.persona-card-name {
+    font-size: 1.5rem;
+    font-weight: 700;
     color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.persona-card-role {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.persona-card-body {
+    padding: 1.5rem;
+}
+
+.persona-card-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.persona-detail-item {
+    text-align: center;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.persona-detail-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-bottom: 0.25rem;
 }
 
-.persona-info p {
-    color: var(--text-secondary);
+.persona-detail-value {
     font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
-.persona-actions {
+.persona-card-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
 }
 
 .btn-edit, .btn-delete {
-    padding: 0.5rem 1rem;
+    flex: 1;
+    padding: 0.75rem 1rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .btn-edit {
-    background: #e0f2fe;
-    color: #0369a1;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
 }
 
 .btn-edit:hover {
-    background: #bae6fd;
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-2px);
 }
 
 .btn-delete {
-    background: #fee2e2;
-    color: #dc2626;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
 }
 
 .btn-delete:hover {
-    background: #fecaca;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
 }
 
 .empty-state {
     text-align: center;
-    padding: 3rem;
+    padding: 4rem 2rem;
     color: var(--text-secondary);
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed var(--border-color);
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
 }
 
 .empty-state h3 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
     margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
 .empty-state p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
 .btn-primary {
-    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), #5b21b6);
     color: white;
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .btn-primary:hover {
-    background: var(--primary-color);
-    opacity: 0.9;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #5b21b6, #4c1d95);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(106, 36, 255, 0.3);
+}
+
+/* Stats Section */
+.personas-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 

@@ -353,35 +353,79 @@ async function loadPersonas() {
     }
 }
 
-// Display personas in the list
+// Display personas in the Dribbble-style grid
 function displayPersonas(personas) {
     const personasList = document.getElementById('personasList');
+    
+    // Update stats
+    updateStats(personas);
     
     if (personas.length === 0) {
         personasList.innerHTML = `
             <div class="empty-state">
+                <div class="empty-state-icon">👥</div>
                 <h3>No personas yet</h3>
-                <p>Create your first persona to get started!</p>
-                <button class="btn-primary" onclick="showTab('create')">Create Persona</button>
+                <p>Create your first persona to get started building your user research library!</p>
+                <button class="btn-primary" onclick="showTab('create')">Create Your First Persona</button>
             </div>
         `;
         return;
     }
 
     personasList.innerHTML = personas.map(persona => `
-        <div class="persona-item">
-            <img src="${persona.image_url || 'https://via.placeholder.com/60x60?text=No+Image'}" 
-                 alt="${persona.name}" class="persona-avatar">
-            <div class="persona-info">
-                <h3>${persona.name}</h3>
-                <p>${persona.occupation} • ${persona.age ? persona.age + ' years old' : 'Age not specified'}</p>
+        <div class="persona-card">
+            <div class="persona-card-header">
+                <img src="${persona.image_url || 'https://via.placeholder.com/80x80?text=👤'}" 
+                     alt="${persona.name}" class="persona-card-avatar">
+                <h3 class="persona-card-name">${persona.name}</h3>
+                <p class="persona-card-role">${persona.occupation}</p>
             </div>
-            <div class="persona-actions">
-                <button class="btn-edit" onclick="editPersona('${persona.id}')">Edit</button>
-                <button class="btn-delete" onclick="deletePersona('${persona.id}')">Delete</button>
+            <div class="persona-card-body">
+                <div class="persona-card-details">
+                    <div class="persona-detail-item">
+                        <div class="persona-detail-label">Age</div>
+                        <div class="persona-detail-value">${persona.age || 'N/A'}</div>
+                    </div>
+                    <div class="persona-detail-item">
+                        <div class="persona-detail-label">Location</div>
+                        <div class="persona-detail-value">${persona.location || 'N/A'}</div>
+                    </div>
+                    <div class="persona-detail-item">
+                        <div class="persona-detail-label">Education</div>
+                        <div class="persona-detail-value">${persona.education || 'N/A'}</div>
+                    </div>
+                    <div class="persona-detail-item">
+                        <div class="persona-detail-label">Tech Level</div>
+                        <div class="persona-detail-value">${persona.tech_literacy || 'N/A'}</div>
+                    </div>
+                </div>
+                <div class="persona-card-actions">
+                    <button class="btn-edit" onclick="editPersona('${persona.id}')">Edit</button>
+                    <button class="btn-delete" onclick="deletePersona('${persona.id}')">Delete</button>
+                </div>
             </div>
         </div>
     `).join('');
+}
+
+// Update statistics
+function updateStats(personas) {
+    const totalPersonas = document.getElementById('totalPersonas');
+    const recentPersonas = document.getElementById('recentPersonas');
+    const activePersonas = document.getElementById('activePersonas');
+    
+    if (totalPersonas) totalPersonas.textContent = personas.length;
+    
+    // Calculate recent personas (this week)
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const recentCount = personas.filter(persona => 
+        new Date(persona.created_at) > oneWeekAgo
+    ).length;
+    if (recentPersonas) recentPersonas.textContent = recentCount;
+    
+    // For now, all personas are considered active
+    if (activePersonas) activePersonas.textContent = personas.length;
 }
 
 // Edit persona

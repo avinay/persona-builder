@@ -173,10 +173,30 @@
             <div id="manage-tab" class="tab-content">
                 <section class="manage-section">
                     <h2>Your Personas</h2>
+                    
+                    <!-- Stats Section -->
+                    <div class="personas-stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalPersonas">0</div>
+                            <div class="stat-label">Total Personas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="recentPersonas">0</div>
+                            <div class="stat-label">This Week</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="activePersonas">0</div>
+                            <div class="stat-label">Active</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Search Bar -->
                     <div class="search-bar">
                         <input type="text" id="searchInput" placeholder="Search personas by name or occupation..." onkeyup="searchPersonas()">
                     </div>
-                    <div id="personasList" class="personas-list">
+                    
+                    <!-- Personas Grid -->
+                    <div id="personasList" class="personas-grid">
                         <!-- Personas will be loaded here -->
                     </div>
                 </section>
